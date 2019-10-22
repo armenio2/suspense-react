@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import useAxios from 'axios-hooks'
+
 
 const Home = () => {
 
-    const [{ data, loading, error }, refetch] = useAxios(
+    const [{ data }, refetch] = useAxios(
         'https://api.myjson.com/bins/820fc'
     )
-
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error!</p>
 
     return (
         <div>
             <button onClick={refetch}>refetch</button>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <Suspense fallback={<div>Loading...</div>}>
+                <pre>{JSON.stringify(data, null, 2)}</pre>
+            </Suspense>
         </div>
     );
 }
